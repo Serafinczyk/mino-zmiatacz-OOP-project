@@ -4,6 +4,7 @@ MinesweeperBoard::MinesweeperBoard() {
 	initializeBoard(7, 5);
 	initializeRandomDevice();
 	placeMinesAtHardCodedPos();
+	gameState = RUNNING;
 }
 
 MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
@@ -15,6 +16,7 @@ MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
 		float numberOfMinesToPlace = (float) width * height * _mode / 100 ; //Calculating from value inside enum :)
 		placeMinesRandomly(static_cast<int>(std::ceil(numberOfMinesToPlace)));
 	}
+	gameState = RUNNING;
 }
 
 void MinesweeperBoard::initializeBoard(int _height, int _width) {
@@ -108,6 +110,13 @@ bool MinesweeperBoard::hasFlag(int _row, int _col) const {
 	if (_row<0 || _col<0 || _row>=height || _col>=width) return false; //Outside the board
 	if (board[_row][_col].isRevealed) return false; //Already revealed
 	return board[_row][_col].hasFlag;
+}
+
+void  MinesweeperBoard::toggleFlag(int _row, int _col) {
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return; //Outside the board
+	if (board[_row][_col].isRevealed) return; //Already revealed
+	if (gameState != RUNNING) return; //Game is already finished
+	board[_row][_col].hasFlag ^= true; //using XOR to togle the flag
 }
 
 //Debugging helpers

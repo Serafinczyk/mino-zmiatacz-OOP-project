@@ -3,6 +3,12 @@
 #include <iostream>
 #include <random>
 
+struct Field {
+	bool hasMine;
+	bool hasFlag;
+	bool isRevealed;
+};
+
 enum GameMode {
 	EASY = 10,
 	NORMAL = 20,
@@ -34,20 +40,15 @@ class MinesweeperBoard
 		//Game logic functions
 		int countMines(int _row, int _col) const;
 		bool hasFlag(int _row, int _col) const;
-
-		struct Field {
-			bool hasMine;
-			bool hasFlag;
-			bool isRevealed;
-		};
+		void toggleFlag(int _row, int _col);
 
 	private:
-		
 		//Board data
 		int width;
 		int height;
 		int minesCount;
 		std::vector<std::vector<Field>> board;
+		GameState gameState;
 
 		//Helpers and initializers
 		void initializeBoard(int _height, int _width);
