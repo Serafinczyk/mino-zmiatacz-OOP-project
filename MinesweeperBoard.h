@@ -33,6 +33,7 @@ class MinesweeperBoard
 
 		//Game logic functions
 		int countMines(int _row, int _col) const;
+		bool hasFlag(int _row, int _col) const;
 
 		struct Field {
 			bool hasMine;

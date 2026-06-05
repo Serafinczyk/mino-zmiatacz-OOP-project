@@ -13,7 +13,7 @@ MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
 		placeMinesInDebugMode();
 	} else {
 		float numberOfMinesToPlace = (float) width * height * _mode / 100 ; //Calculating from value inside enum :)
-		placeMinesRandomly(std::ceil(numberOfMinesToPlace));
+		placeMinesRandomly(static_cast<int>(std::ceil(numberOfMinesToPlace)));
 	}
 }
 
@@ -101,8 +101,13 @@ int  MinesweeperBoard::countMines(int _row, int _col) const {
 			}
 		}
 	}
-
 	return minesAround;
+}
+
+bool MinesweeperBoard::hasFlag(int _row, int _col) const {
+	if (_row<0 || _col<0 || _row>=height || _col>=width) return false; //Outside the board
+	if (board[_row][_col].isRevealed) return false; //Already revealed
+	return board[_row][_col].hasFlag;
 }
 
 //Debugging helpers
