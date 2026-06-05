@@ -162,6 +162,16 @@ void MinesweeperBoard::revealField(int _row, int _col) {
 	}
 }
 
+void MinesweeperBoard::revealAllMines() { //First time i have to scan whole board :(
+	for (int row = 0; row < height; ++row) {
+		for (int col = 0; col < width; ++col) {
+			if (board[row][col].hasMine && !board[row][col].hasFlag) { // Uncover only ones without flag
+				board[row][col].isRevealed = true;
+			}
+		}
+	}
+}
+
 bool MinesweeperBoard::isRevealed(int _row, int _col) const {
 	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return false; //Outside the board
 	return board[_row][_col].isRevealed;
