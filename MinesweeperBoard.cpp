@@ -85,6 +85,26 @@ int MinesweeperBoard::getMineCount() const {
 	return minesCount;
 }
 
+int  MinesweeperBoard::countMines(int _row, int _col) const {
+	int minesAround = 0;
+
+	if (_row<0 || _col<0 || _row>=height || _col>=width) return -1; //Invalid position
+	if (!board[_row][_col].isRevealed) return -1; //Position was not revealed yet
+	//Start scanning
+	_row--;
+	_col--;
+	for (int row = _row; row < 3 + _row;++row) {
+		for (int col = _col; col < 3 + _col;++col) {
+			if (row < 0 || col < 0 || row >= height || col >= width) continue; //Out of bounds, skip
+			if (board[row][col].hasMine) {
+				minesAround++;
+			}
+		}
+	}
+
+	return minesAround;
+}
+
 //Debugging helpers
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";
