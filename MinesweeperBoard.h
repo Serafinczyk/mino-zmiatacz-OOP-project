@@ -36,6 +36,7 @@ class MinesweeperBoard
 		int getBoardWidth() const;
 		int getBoardHeight() const;
 		int getMineCount() const;
+		GameState getGameState() const;
 
 		//Game logic functions
 		int countMines(int _row, int _col) const;

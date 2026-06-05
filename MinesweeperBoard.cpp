@@ -91,6 +91,10 @@ int MinesweeperBoard::getMineCount() const {
 	return minesCount;
 }
 
+GameState MinesweeperBoard::getGameState() const {
+	return gameState;
+}
+
 int  MinesweeperBoard::countMines(int _row, int _col) const {
 	int minesAround = 0;
 
