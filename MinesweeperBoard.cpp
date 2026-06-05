@@ -182,8 +182,12 @@ char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
 	Field f = board[_row][_col];
 	if (!f.isRevealed && f.hasFlag) return 'F';
 	if (!f.isRevealed && !f.hasFlag) return '_';
-	if (f.isRevealed && f.hasMine) return 'x';
-	if (f.isRevealede) return '0' + countMines(_row, _col); //Converting number of mines around to char
+	//Only revealed fields will reach this point
+	if (f.hasMine) return 'x';
+	//Only revealed fields without mines will reach this point
+	int minesAround = countMines(_row, _col);
+	if (minesAround == 0) return ' ';
+	return '0' + minesAround; //int to char
 }
 
 void MinesweeperBoard::debug_display() const {
