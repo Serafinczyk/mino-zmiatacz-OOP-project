@@ -31,6 +31,7 @@ class MinesweeperBoard
 
 		//Debug function to display the board in console
 		void debug_display() const;
+		char getFieldInfo(int _row, int _col) const;
 
 		//Getters
 		int getBoardWidth() const;

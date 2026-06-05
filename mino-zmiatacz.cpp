@@ -4,10 +4,13 @@
 
 int main()
 {
-	MinesweeperBoard board(3,8,NORMAL);
-	int width = board.getBoardWidth();
-	int height = board.getBoardHeight();
-	int mines = board.getMineCount();
+	MinesweeperBoard board(3,8,HARD);
+	board.debug_display();
+	board.toggleFlag(1, 1);
+	
+	board.hasFlag(1, 1);
+	board.revealField(0, 0);
+	board.revealField(1, 0);
 	board.debug_display();
 }
 

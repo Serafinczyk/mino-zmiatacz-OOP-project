@@ -106,7 +106,7 @@ GameState MinesweeperBoard::getGameState() const {
 int  MinesweeperBoard::countMines(int _row, int _col) const {
 	int minesAround = 0;
 
-	if (_row<0 || _col<0 || _row>=height || _col>=width) return -1; //Invalid position
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return -1; //Invalid position
 	if (!board[_row][_col].isRevealed) return -1; //Position was not revealed yet
 	//Start scanning
 	_row--;
@@ -123,7 +123,7 @@ int  MinesweeperBoard::countMines(int _row, int _col) const {
 }
 
 bool MinesweeperBoard::hasFlag(int _row, int _col) const {
-	if (_row<0 || _col<0 || _row>=height || _col>=width) return false; //Outside the board
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return false; //Outside the board
 	if (board[_row][_col].isRevealed) return false; //Already revealed
 	return board[_row][_col].hasFlag;
 }
@@ -141,24 +141,23 @@ void MinesweeperBoard::revealField(int _row, int _col) {
 	if (gameState != RUNNING) return; //Game is already finished
 	if (board[_row][_col].hasFlag) return; //There is a flag on the field
 
-	if (!board[_row][_col].isRevealed && !board[_row][_col].hasMine) { //If the field was not revealed and there is no mine on it 
+	waitingForFirstMove = false;
+
+	if (!board[_row][_col].hasMine) { //If the field was not revealed and there is no mine on it 
 		board[_row][_col].isRevealed = true;
-		waitingForFirstMove = false;
 		return;
 	}
 
-	if (!board[_row][_col].isRevealed && board[_row][_col].hasMine) { //If the field was not revealed and there is a mine on it 
-		if (waitingForFirstMove && gameMode!=DEBUG) { //its the first player action - move mine to another location, reveal field (not in DEBUG mode!)
-			moveMine(_row, _col);
-			board[_row][_col].isRevealed = true;
-			waitingForFirstMove = false;
-			return;
-		}
-		else {
-			revealAllMines();
-			gameState = FINISHED_LOSS;
-			return;
-		}
+	//If (if not needed) the field was not revealed and there is a mine on it 
+	if (waitingForFirstMove && gameMode!=DEBUG) { //its the first player action - move mine to another location, reveal field (not in DEBUG mode!)
+		moveMine(_row, _col);
+		board[_row][_col].isRevealed = true;
+		return;
+	}
+	else {
+		revealAllMines();
+		gameState = FINISHED_LOSS;
+		return;
 	}
 }
 
@@ -178,6 +177,15 @@ bool MinesweeperBoard::isRevealed(int _row, int _col) const {
 }
 
 //Debugging helpers
+char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return '#'; //Outside the board
+	Field f = board[_row][_col];
+	if (!f.isRevealed && f.hasFlag) return 'F';
+	if (!f.isRevealed && !f.hasFlag) return '_';
+	if (f.isRevealed && f.hasMine) return 'x';
+	if (f.isRevealede) return '0' + countMines(_row, _col); //Converting number of mines around to char
+}
+
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";
 	for (int col = 0; col < width; ++col) { //Table header with column numbers
