@@ -41,14 +41,17 @@ class MinesweeperBoard
 		int countMines(int _row, int _col) const;
 		bool hasFlag(int _row, int _col) const;
 		void toggleFlag(int _row, int _col);
+		void revealField(int _row, int _col);
 
 	private:
 		//Board data
 		int width;
 		int height;
 		int minesCount;
+		bool waitingForFirstMove; //To ensure that the first move is always safe
 		std::vector<std::vector<Field>> board;
 		GameState gameState;
+		GameMode gameMode;
 
 		//Helpers and initializers
 		void initializeBoard(int _height, int _width);
@@ -56,6 +59,8 @@ class MinesweeperBoard
 		void placeMinesAtHardCodedPos();
 		void placeMinesInDebugMode();
 		void placeMinesRandomly(int _minesToPlace);
+		void moveMine(int _row, int _col);
+		void revealAllMines();
 
 		//Randomness for mines placement
 		std::random_device randomDevice;

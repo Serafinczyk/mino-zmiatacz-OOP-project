@@ -4,6 +4,8 @@ MinesweeperBoard::MinesweeperBoard() {
 	initializeBoard(7, 5);
 	initializeRandomDevice();
 	placeMinesAtHardCodedPos();
+	waitingForFirstMove = true;
+	gameMode = EASY;
 	gameState = RUNNING;
 }
 
@@ -16,6 +18,8 @@ MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
 		float numberOfMinesToPlace = (float) width * height * _mode / 100 ; //Calculating from value inside enum :)
 		placeMinesRandomly(static_cast<int>(std::ceil(numberOfMinesToPlace)));
 	}
+	waitingForFirstMove = true;
+	gameMode = _mode;
 	gameState = RUNNING;
 }
 
@@ -117,6 +121,33 @@ void  MinesweeperBoard::toggleFlag(int _row, int _col) {
 	if (board[_row][_col].isRevealed) return; //Already revealed
 	if (gameState != RUNNING) return; //Game is already finished
 	board[_row][_col].hasFlag ^= true; //using XOR to togle the flag
+}
+
+void MinesweeperBoard::revealField(int _row, int _col) {
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return; //Outside the board
+	if (board[_row][_col].isRevealed) return; //Already revealed
+	if (gameState != RUNNING) return; //Game is already finished
+	if (board[_row][_col].hasFlag) return; //There is a flag on the field
+
+	if (!board[_row][_col].isRevealed && !board[_row][_col].hasMine) { //If the field was not revealed and there is no mine on it 
+		board[_row][_col].isRevealed = true;
+		waitingForFirstMove = false;
+		return;
+	}
+
+	if (!board[_row][_col].isRevealed && board[_row][_col].hasMine) { //If the field was not revealed and there is a mine on it 
+		if (waitingForFirstMove && gameMode!=DEBUG) { //its the first player action - move mine to another location, reveal field (not in DEBUG mode!)
+			moveMine(_row, _col);
+			board[_row][_col].isRevealed = true;
+			waitingForFirstMove = false;
+			return;
+		}
+		else {
+			revealAllMines();
+			gameState = FINISHED_LOSS;
+			return;
+		}
+	}
 }
 
 //Debugging helpers
