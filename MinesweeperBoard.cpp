@@ -72,6 +72,19 @@ void MinesweeperBoard::placeMinesRandomly(int _minesToPlace) {
 	}
 }
 
+
+int MinesweeperBoard::getBoardWidth() const {
+	return width;
+}
+
+int MinesweeperBoard::getBoardHeight() const {
+	return height;
+}
+
+int MinesweeperBoard::getMineCount() const {
+	return minesCount;
+}
+
 //Debugging helpers
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";

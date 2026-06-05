@@ -19,10 +19,17 @@ enum GameState {
 class MinesweeperBoard
 {
 	public:
+		//Constructors
 		MinesweeperBoard();
 		MinesweeperBoard(int _width, int _height, GameMode _mode);
 
+		//Debug function to display the board in console
 		void debug_display() const;
+
+		//Getters
+		int getBoardWidth() const;
+		int getBoardHeight() const;
+		int getMineCount() const;
 
 		struct Field {
 			bool hasMine;
