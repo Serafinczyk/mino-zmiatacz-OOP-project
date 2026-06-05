@@ -42,6 +42,7 @@ class MinesweeperBoard
 		bool hasFlag(int _row, int _col) const;
 		void toggleFlag(int _row, int _col);
 		void revealField(int _row, int _col);
+		bool isRevealed(int _row, int _col) const;
 
 	private:
 		//Board data

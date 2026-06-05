@@ -150,6 +150,11 @@ void MinesweeperBoard::revealField(int _row, int _col) {
 	}
 }
 
+bool MinesweeperBoard::isRevealed(int _row, int _col) const {
+	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return false; //Outside the board
+	return board[_row][_col].isRevealed;
+}
+
 //Debugging helpers
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";
