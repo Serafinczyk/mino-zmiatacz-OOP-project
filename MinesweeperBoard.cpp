@@ -38,9 +38,13 @@ void MinesweeperBoard::placeMinesAtHardCodedPos() {
 	
 	board[0][2].hasMine = true; //row=0 col=2 has mine
 	board[0][2].hasFlag = true; //Also has flag
+
+	minesCount = 2;
 }
 
 void MinesweeperBoard::placeMinesInDebugMode() {
+	minesCount = width + height - 1 + std::min(width, height) - 1;
+
 	//To be more efficient, i won't go through each tile
 	for (int col = 0; col < width; ++col) {
 		board[0][col].hasMine = true;
@@ -56,6 +60,7 @@ void MinesweeperBoard::placeMinesInDebugMode() {
 }
 
 void MinesweeperBoard::placeMinesRandomly(int _minesToPlace) {
+	minesCount = _minesToPlace;
 	for (int mine = 0; mine < _minesToPlace; ++mine) {
 		int row = randomDistributionForRow(randomGenerator);
 		int col = randomDistributionForCol(randomGenerator);

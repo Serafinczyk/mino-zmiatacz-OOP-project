@@ -4,7 +4,7 @@
 
 int main()
 {
-	MinesweeperBoard board(9,9,NORMAL);
+	MinesweeperBoard board(3,8,NORMAL);
 	board.debug_display();
 }
 

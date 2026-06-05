@@ -10,6 +10,12 @@ enum GameMode {
 	DEBUG = 0
 };
 
+enum GameState {
+	RUNNING = 0,
+	FINISHED_WIN = 1,
+	FINISHED_LOSS = -1
+};
+
 class MinesweeperBoard
 {
 	public:
@@ -25,10 +31,14 @@ class MinesweeperBoard
 		};
 
 	private:
+		
+		//Board data
 		int width;
 		int height;
+		int minesCount;
 		std::vector<std::vector<Field>> board;
 
+		//Helpers and initializers
 		void initializeBoard(int _height, int _width);
 		void initializeRandomDevice();
 		void placeMinesAtHardCodedPos();
