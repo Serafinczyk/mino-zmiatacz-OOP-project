@@ -16,7 +16,7 @@ class MinesweeperBoard
 		int width;
 		int height;
 		std::vector<std::vector<Field>> board;
-		void initializeBoard(int _width, int _eight);
+		void initializeBoard(int _height, int _width);
 		void placeMinesAtHardCodedPos();
 
 };
