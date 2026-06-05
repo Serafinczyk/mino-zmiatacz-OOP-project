@@ -62,6 +62,7 @@ class MinesweeperBoard
 		void placeMinesInDebugMode();
 		void placeMinesRandomly(int _minesToPlace);
 		void moveMine(int _row, int _col);
+		void placeMineAtRandomEmptyField();
 		void revealAllMines();
 
 		//Randomness for mines placement

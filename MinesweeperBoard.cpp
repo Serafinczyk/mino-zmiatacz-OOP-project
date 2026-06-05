@@ -68,16 +68,24 @@ void MinesweeperBoard::placeMinesInDebugMode() {
 void MinesweeperBoard::placeMinesRandomly(int _minesToPlace) {
 	minesCount = _minesToPlace;
 	for (int mine = 0; mine < _minesToPlace; ++mine) {
-		int row = randomDistributionForRow(randomGenerator);
-		int col = randomDistributionForCol(randomGenerator);
-		while (board[row][col].hasMine) {
-			row = randomDistributionForRow(randomGenerator);
-			col = randomDistributionForCol(randomGenerator);
-		}
-		board[row][col].hasMine = true;
+		placeMineAtRandomEmptyField();
 	}
 }
 
+void MinesweeperBoard::moveMine(int _row, int _col) {
+	board[_row][_col].hasMine = false;
+	placeMineAtRandomEmptyField();
+}
+
+void MinesweeperBoard::placeMineAtRandomEmptyField() {
+	int row = randomDistributionForRow(randomGenerator);
+	int col = randomDistributionForCol(randomGenerator);
+	while (board[row][col].hasMine) {
+		row = randomDistributionForRow(randomGenerator);
+		col = randomDistributionForCol(randomGenerator);
+	}
+	board[row][col].hasMine = true;
+}
 
 int MinesweeperBoard::getBoardWidth() const {
 	return width;
