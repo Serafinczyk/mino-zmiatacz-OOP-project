@@ -7,6 +7,7 @@ struct Field {
 	bool hasMine;
 	bool hasFlag;
 	bool isRevealed;
+	int minesCount;
 };
 
 enum GameMode {
@@ -31,7 +32,7 @@ class MinesweeperBoard
 
 		//Debug function to display the board in console
 		void debug_display() const;
-		char getFieldInfo(int _row, int _col) const;
+		char getFieldInfo(int _row, int _col);
 
 		//Getters
 		int getBoardWidth() const;
@@ -40,7 +41,7 @@ class MinesweeperBoard
 		GameState getGameState() const;
 
 		//Game logic functions
-		int countMines(int _row, int _col) const;
+		int countMines(int _row, int _col);
 		bool hasFlag(int _row, int _col) const;
 		void toggleFlag(int _row, int _col);
 		void revealField(int _row, int _col);
@@ -51,6 +52,8 @@ class MinesweeperBoard
 		int width;
 		int height;
 		int minesCount;
+		int revealedFields;
+		int allFields;
 		bool waitingForFirstMove; //To ensure that the first move is always safe
 		std::vector<std::vector<Field>> board;
 		GameState gameState;
@@ -71,5 +74,6 @@ class MinesweeperBoard
 		void moveMine(int _row, int _col);
 		void placeMineAtRandomEmptyField();
 		void revealAllMines();
+		void recursiveRevealAlgorithm(int _row, int _col);
 };
 

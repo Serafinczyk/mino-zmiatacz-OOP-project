@@ -101,4 +101,5 @@ void MSTextController::play() {
 			break;
 		}
 	} while (key!='e');
+	view.clear();
 }
