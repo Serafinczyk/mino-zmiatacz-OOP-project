@@ -8,6 +8,7 @@ int main()
 	view.display();
 	board.revealField(0, 5);
 	board.revealField(0, 0);
+	view.clear();
 	view.display();
 
 }

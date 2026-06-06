@@ -10,8 +10,8 @@ class MSBoardTextView
 	//Constructor
 	MSBoardTextView(MinesweeperBoard& _board);
 	
-		void display() const;
-		void clear() const;
+	void display() const;
+	void clear() const;
 
 	private:
 		MinesweeperBoard& board;
