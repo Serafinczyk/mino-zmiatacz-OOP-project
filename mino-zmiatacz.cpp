@@ -3,10 +3,11 @@
 
 int main()
 {
-	MinesweeperBoard board(15, 15, GameMode::EASY); //max 50 x 50
+	MinesweeperBoard board(6, 6, GameMode::EASY); //max 50 x 50
 	MSBoardTextView view(board);
 	view.display();
 	board.revealField(0, 5);
+	board.revealField(0, 0);
 	view.display();
 
 }

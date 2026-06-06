@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "MinesweeperBoard.h"
 #include <Windows.h>
 
@@ -16,5 +17,6 @@ class MSBoardTextView
 		MinesweeperBoard& board;
 		void drawMarginTop(int _size) const;
 		void drawMarginLeft(int _size) const;
+		std::string formatNumTo3Chars(int _number) const;
 };
 
