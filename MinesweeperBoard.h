@@ -56,6 +56,12 @@ class MinesweeperBoard
 		GameState gameState;
 		GameMode gameMode;
 
+		//Randomness for mines placement
+		std::random_device randomDevice;
+		std::mt19937 randomGenerator;
+		std::uniform_int_distribution<> randomDistributionForRow;
+		std::uniform_int_distribution<> randomDistributionForCol;
+
 		//Helpers and initializers
 		void initializeBoard(int _height, int _width);
 		void initializeRandomDevice();
@@ -65,11 +71,5 @@ class MinesweeperBoard
 		void moveMine(int _row, int _col);
 		void placeMineAtRandomEmptyField();
 		void revealAllMines();
-
-		//Randomness for mines placement
-		std::random_device randomDevice;
-		std::mt19937 randomGenerator;
-		std::uniform_int_distribution<> randomDistributionForRow;
-		std::uniform_int_distribution<> randomDistributionForCol;
 };
 

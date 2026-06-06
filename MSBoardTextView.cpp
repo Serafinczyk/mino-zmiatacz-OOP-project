@@ -19,11 +19,12 @@ void MSBoardTextView::display() const {
 	if (state == FINISHED_WIN) {
 		drawMarginLeft(widthInChars / 2 - 6);
 		std::cout << "Congrats you won :)" << std::endl;
-	}
-	
-	if (state == FINISHED_LOSS) {
+	} else if (state == FINISHED_LOSS) {
 		drawMarginLeft(widthInChars / 2 - 2);
 		std::cout << "You lost :(" << std::endl;
+	}
+	else {
+		drawMarginTop(1);
 	}
 
 	drawMarginTop(1);
@@ -44,7 +45,13 @@ void MSBoardTextView::display() const {
 		std::cout << std::endl;
 	}
 	drawMarginTop(3);
-	std::cout << "(Use arrow keys to move, f key to place a flag, and space to reveal field.)"<<std::endl;
+	if (state == RUNNING) {
+		std::cout << "(Use wsad keys to move, f key to place a flag, space to reveal field and e to exit.)" << std::endl;
+	}
+	else {
+		std::cout << "(Press p to play again or e to exit.)" << std::endl;
+	}
+	
 
 }
 

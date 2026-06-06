@@ -1,15 +1,15 @@
-﻿#include "MSBoardTextView.h"
-#include "MinesweeperBoard.h"
+﻿#include "MinesweeperBoard.h"
+#include "MSBoardTextView.h"
+#include "MSTextController.h"
 
 int main()
 {
-	MinesweeperBoard board(6, 6, GameMode::EASY); //max 50 x 50
+	MinesweeperBoard board(20, 10, GameMode::EASY);
 	MSBoardTextView view(board);
-	view.display();
-	board.revealField(0, 5);
-	board.revealField(0, 0);
-	view.clear();
-	view.display();
+	MSTextController ctrl(board, view);
+
+	ctrl.play();
+
 
 }
 
