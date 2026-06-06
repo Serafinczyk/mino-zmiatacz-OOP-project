@@ -125,9 +125,11 @@
   <ItemGroup>
     <ClCompile Include="MinesweeperBoard.cpp" />
     <ClCompile Include="mino-zmiatacz.cpp" />
+    <ClCompile Include="MSBoardTextView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinesweeperBoard.h" />
+    <ClInclude Include="MSBoardTextView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -141,10 +141,9 @@ void MinesweeperBoard::revealField(int _row, int _col) {
 	if (gameState != RUNNING) return; //Game is already finished
 	if (board[_row][_col].hasFlag) return; //There is a flag on the field
 
-	waitingForFirstMove = false;
-
 	if (!board[_row][_col].hasMine) { //If the field was not revealed and there is no mine on it 
 		board[_row][_col].isRevealed = true;
+		waitingForFirstMove = false;
 		return;
 	}
 
@@ -152,11 +151,13 @@ void MinesweeperBoard::revealField(int _row, int _col) {
 	if (waitingForFirstMove && gameMode!=DEBUG) { //its the first player action - move mine to another location, reveal field (not in DEBUG mode!)
 		moveMine(_row, _col);
 		board[_row][_col].isRevealed = true;
+		waitingForFirstMove = false;
 		return;
 	}
 	else {
 		revealAllMines();
 		gameState = FINISHED_LOSS;
+		waitingForFirstMove = false;
 		return;
 	}
 }
@@ -176,7 +177,7 @@ bool MinesweeperBoard::isRevealed(int _row, int _col) const {
 	return board[_row][_col].isRevealed;
 }
 
-//Debugging helpers
+//Returns field info for display
 char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
 	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return '#'; //Outside the board
 	Field f = board[_row][_col];
@@ -190,6 +191,8 @@ char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
 	return '0' + minesAround; //int to char
 }
 
+
+//Debugging helper
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";
 	for (int col = 0; col < width; ++col) { //Table header with column numbers
