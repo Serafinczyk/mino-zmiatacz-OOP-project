@@ -71,5 +71,8 @@ class MinesweeperBoard
 		std::mt19937 randomGenerator;
 		std::uniform_int_distribution<> randomDistributionForRow;
 		std::uniform_int_distribution<> randomDistributionForCol;
+
+		//Friends
+		friend class MSCheatEngine;
 };
 

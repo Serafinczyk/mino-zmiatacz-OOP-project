@@ -1,6 +1,6 @@
 #include "MSCheatEngine.h"
 
-MSCheatEngine::MSCheatEngine() {
+MSCheatEngine::MSCheatEngine(MinesweeperBoard& _board) : board(_board) {
 	serialVersion = false;
 	enabled = false;
 
@@ -56,3 +56,14 @@ void MSCheatEngine::enableFrameworkMode() {
 	serialVersion = true;
 }
 
+void MSCheatEngine::spyOnTile(int _row, int _col) {
+	if (enabled) {
+		bool hasMine = board.board[_row][_col].hasMine;
+		if (serialVersion) {
+			
+		}
+		else {
+
+		}
+	}
+}
