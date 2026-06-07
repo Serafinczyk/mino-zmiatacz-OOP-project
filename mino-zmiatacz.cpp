@@ -1,4 +1,5 @@
-﻿#include "MinesweeperBoard.h"
+﻿#include <windows.h>
+#include "MinesweeperBoard.h"
 #include "MSSFMLView.h"
 
 int main()

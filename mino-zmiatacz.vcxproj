@@ -111,6 +111,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)libraries\SFML-3.1.0\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)libraries\SFML-3.1.0\bin\*" "$(OutDir)"  </Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Adding SFML dll files</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -129,6 +135,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)libraries\SFML-3.1.0\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)libraries\SFML-3.1.0\bin\*" "$(OutDir)"  </Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Adding SFML dll files</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MinesweeperBoard.cpp" />
