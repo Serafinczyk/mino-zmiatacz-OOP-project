@@ -14,6 +14,13 @@ MSTextController::MSTextController(MinesweeperBoard& _board, MSBoardTextView& _v
 
 	width = board.getBoardWidth();
 	height = board.getBoardHeight();
+
+	//Cheat depends on graphics mode
+	cheat.addHintFunctions([]() {
+		std::cout << "\x1b[0 q"; //hint for mine
+	}, []() {
+		std::cout << "\x1b[1 q"; //hint for no mine
+	});
 }
 
 MSTextController::~MSTextController() {

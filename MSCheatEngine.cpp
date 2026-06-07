@@ -81,6 +81,11 @@ void MSCheatEngine::showMine() {
 	sendCommandToFramework(0x06, blankScreen, sizeof(blankScreen));
 }
 
+void MSCheatEngine::addHintFunctions(std::function<void()> _hintMine, std::function<void()> _hintNoMine) {
+	hintMine = _hintMine;
+	hintNoMine = _hintNoMine;
+}
+
 void MSCheatEngine::spyOnTile(int _row, int _col) {
 	if (enabled) {
 		bool hasMine = board.board[_row][_col].hasMine;
@@ -94,10 +99,10 @@ void MSCheatEngine::spyOnTile(int _row, int _col) {
 		}
 		else {
 			if (hasMine) {
-				std::cout << "\x1b[0 q";
+				hintMine();
 			}
 			else {
-				std::cout << "\x1b[1 q";
+				hintNoMine();
 			}
 		}
 	}
