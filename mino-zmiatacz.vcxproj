@@ -126,11 +126,13 @@
     <ClCompile Include="MinesweeperBoard.cpp" />
     <ClCompile Include="mino-zmiatacz.cpp" />
     <ClCompile Include="MSBoardTextView.cpp" />
+    <ClCompile Include="MSTextController.cpp" />
     <ClCompile Include="MSCheatEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinesweeperBoard.h" />
     <ClInclude Include="MSBoardTextView.h" />
+    <ClInclude Include="MSTextController.h" />
     <ClInclude Include="MSCheatEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
