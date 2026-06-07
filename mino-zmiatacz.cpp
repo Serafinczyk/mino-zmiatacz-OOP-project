@@ -4,7 +4,7 @@
 
 int main()
 {
-	MinesweeperBoard board(20, 10, GameMode::EASY);
+	MinesweeperBoard board(5, 5, GameMode::EASY);
 	MSBoardTextView view(board);
 	MSTextController ctrl(board, view);
 
