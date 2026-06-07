@@ -1,5 +1,4 @@
 #include "MSTextController.h"
-#include <conio.h>
 
 MSTextController::MSTextController(MinesweeperBoard& _board, MSBoardTextView& _view) : board(_board), view(_view){
 	console = GetStdHandle(STD_OUTPUT_HANDLE);
