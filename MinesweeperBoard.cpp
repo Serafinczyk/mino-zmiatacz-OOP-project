@@ -5,8 +5,10 @@ MinesweeperBoard::MinesweeperBoard() {
 	initializeRandomDevice();
 	placeMinesAtHardCodedPos();
 	waitingForFirstMove = true;
+	revealedFields = 0;
 	gameMode = EASY;
 	gameState = RUNNING;
+	allFields = 5 * 7 - minesCount;
 }
 
 MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
@@ -19,14 +21,16 @@ MinesweeperBoard::MinesweeperBoard(int _width, int _height, GameMode _mode) {
 		placeMinesRandomly(static_cast<int>(std::ceil(numberOfMinesToPlace)));
 	}
 	waitingForFirstMove = true;
+	revealedFields = 0;
 	gameMode = _mode;
 	gameState = RUNNING;
+	allFields = width * height - minesCount;
 }
 
 void MinesweeperBoard::initializeBoard(int _height, int _width) {
 	width = _width;
 	height = _height;
-	Field defaultField = { false, false, false };
+	Field defaultField = { false,false,false, -1 };
 	std::vector<Field> row(width, defaultField);
 	board.resize(height,row);
 }
@@ -103,11 +107,12 @@ GameState MinesweeperBoard::getGameState() const {
 	return gameState;
 }
 
-int  MinesweeperBoard::countMines(int _row, int _col) const {
+int  MinesweeperBoard::countMines(int _row, int _col) {
 	int minesAround = 0;
 
 	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return -1; //Invalid position
 	if (!board[_row][_col].isRevealed) return -1; //Position was not revealed yet
+	if (board[_row][_col].minesCount != -1) return board[_row][_col].minesCount; //Already counted
 	//Start scanning
 	_row--;
 	_col--;
@@ -119,6 +124,10 @@ int  MinesweeperBoard::countMines(int _row, int _col) const {
 			}
 		}
 	}
+	//Coming back to normal indexes
+	_row++;
+	_col++;
+	board[_row][_col].minesCount = minesAround;
 	return minesAround;
 }
 
@@ -135,28 +144,47 @@ void  MinesweeperBoard::toggleFlag(int _row, int _col) {
 	board[_row][_col].hasFlag ^= true; //using XOR to togle the flag
 }
 
+void MinesweeperBoard::recursiveRevealAlgorithm(int _row, int _col) {
+	board[_row][_col].isRevealed = true;
+	revealedFields++;
+	waitingForFirstMove = false;
+	if (revealedFields==allFields) { //Revealed all fields so game ends
+		gameState = FINISHED_WIN;
+		return;
+	}
+	if (countMines(_row,_col)==0) {
+		_row--;
+		_col--;
+		for (int row = _row; row < 3 + _row;++row) {
+			for (int col = _col; col < 3 + _col;++col) {
+				if (row < 0 || col < 0 || row >= height || col >= width) continue; //Out of bounds, skip
+				if (!board[row][col].hasFlag && !board[row][col].hasMine && !board[row][col].isRevealed) recursiveRevealAlgorithm(row,col);
+			}
+		}
+	}
+}
+
 void MinesweeperBoard::revealField(int _row, int _col) {
 	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return; //Outside the board
 	if (board[_row][_col].isRevealed) return; //Already revealed
 	if (gameState != RUNNING) return; //Game is already finished
 	if (board[_row][_col].hasFlag) return; //There is a flag on the field
 
-	waitingForFirstMove = false;
-
 	if (!board[_row][_col].hasMine) { //If the field was not revealed and there is no mine on it 
-		board[_row][_col].isRevealed = true;
+		recursiveRevealAlgorithm(_row, _col);
 		return;
 	}
 
 	//If (if not needed) the field was not revealed and there is a mine on it 
 	if (waitingForFirstMove && gameMode!=DEBUG) { //its the first player action - move mine to another location, reveal field (not in DEBUG mode!)
 		moveMine(_row, _col);
-		board[_row][_col].isRevealed = true;
+		recursiveRevealAlgorithm(_row, _col);
 		return;
 	}
 	else {
 		revealAllMines();
 		gameState = FINISHED_LOSS;
+		waitingForFirstMove = false;
 		return;
 	}
 }
@@ -176,8 +204,8 @@ bool MinesweeperBoard::isRevealed(int _row, int _col) const {
 	return board[_row][_col].isRevealed;
 }
 
-//Debugging helpers
-char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
+//Returns field info for display
+char MinesweeperBoard::getFieldInfo(int _row, int _col){
 	if (_row < 0 || _col < 0 || _row >= height || _col >= width) return '#'; //Outside the board
 	Field f = board[_row][_col];
 	if (!f.isRevealed && f.hasFlag) return 'F';
@@ -190,6 +218,8 @@ char MinesweeperBoard::getFieldInfo(int _row, int _col) const {
 	return '0' + minesAround; //int to char
 }
 
+
+//Debugging helper
 void MinesweeperBoard::debug_display() const {
 	std::cout << "    ";
 	for (int col = 0; col < width; ++col) { //Table header with column numbers
