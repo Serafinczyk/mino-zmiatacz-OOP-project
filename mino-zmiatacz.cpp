@@ -4,7 +4,7 @@
 
 int main()
 {
-	MinesweeperBoard board(5, 5, GameMode::EASY);
+	MinesweeperBoard board(10, 10, GameMode::EASY);
 	MSBoardTextView view(board);
 	MSCheatEngine sussObject(board);
 	sussObject.enableFrameworkMode();
