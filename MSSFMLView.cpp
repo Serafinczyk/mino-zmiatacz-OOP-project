@@ -1,16 +1,21 @@
 #include "MSSFMLView.h"
 
-MSSFMLView::MSSFMLView(MinesweeperBoard& b) {
+MSSFMLView::MSSFMLView(MinesweeperBoard& _b) : board(_b){
 
 }
 
-void MSSFMLView::display(const bool& debug) {
+const void MSSFMLView::display(const bool& _debug) {
 
 }
 
-const void SSFMLView::updateScene(Scene& s) {
+MSSFMLView::Scene MSSFMLView::createScene() {
+	Scene scene;
+	return scene;
+}
+
+const void MSSFMLView::updateScene(Scene& _s) {
 
 }
-const void SSFMLView::updateSceneDebug(Scene& s) {
+const void MSSFMLView::updateSceneDebug(Scene& _s) {
 
 }

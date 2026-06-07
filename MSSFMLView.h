@@ -1,12 +1,15 @@
 #pragma once
 #include "MinesweeperBoard.h"
 
+#include <SFML/Graphics.hpp>
+#include "MinesweeperBoard.h"
+
 class MSSFMLView
 {
 public:
-	MSSFMLView(MinesweeperBoard& b);
+	MSSFMLView(MinesweeperBoard& _b);
 
-	const void display(const bool& debug);
+	const void display(const bool& _debug);
 
 private:
 	struct Scene
@@ -16,8 +19,8 @@ private:
 
 	Scene createScene();
 	//the below functions update the view every frame
-	const void updateScene(Scene& s);
-	const void updateSceneDebug(Scene& s);
+	const void updateScene(Scene& _s);
+	const void updateSceneDebug(Scene& _s);
 
 	MinesweeperBoard& board;
 };
