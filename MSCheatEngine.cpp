@@ -43,13 +43,15 @@ void MSCheatEngine::enableFrameworkMode() {
 	serialDevice = CreateFile(L"\\\\.\\COM3",GENERIC_WRITE,0,NULL,OPEN_EXISTING,/*FILE_FLAG_OVERLAPPED*/FILE_ATTRIBUTE_NORMAL, NULL);
 	
 	if (serialDevice == INVALID_HANDLE_VALUE) {
-		std::cout << "Unable to use led matrix, falling back to normal mode" << std::endl;
+		std::cout << "Unable to use led matrix, falling back to normal mode, press any key to continue" << std::endl;
+		_getch();
 		return;
 	}
 
 	if (!SetCommState(serialDevice, &serialSettings)) {
-		std::cout << "Unable to use led matrix, falling back to normal mode" << std::endl;
+		std::cout << "Unable to use led matrix, falling back to normal mode, press any key to continue" << std::endl;
 		CloseHandle(serialDevice);
+		_getch();
 		return;
 	}
 
