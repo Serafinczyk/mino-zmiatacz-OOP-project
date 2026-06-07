@@ -1,8 +1,10 @@
 #pragma once
 #include <windows.h>
+#include <conio.h>
 #include "MinesweeperBoard.h"
 #include "MSBoardTextView.h"
 #include "MSCheatEngine.h"
+
 
 class MSTextController
 {
