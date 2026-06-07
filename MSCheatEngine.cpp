@@ -56,14 +56,47 @@ void MSCheatEngine::enableFrameworkMode() {
 	serialVersion = true;
 }
 
+void MSCheatEngine::sendCommandToFramework(byte _commandId, byte* _payload, size_t _payloadLength) {
+	size_t size = _payloadLength + 3; //Two header bytes + command code
+	byte* payload = new byte[size];
+	payload[0] = 0x32;
+	payload[1] = 0xAC;
+	payload[2] = _commandId;
+	memcpy(payload + 3, _payload, _payloadLength);
+	WriteFile(serialDevice, payload, size, NULL, NULL);
+	delete[] payload;
+}
+
+void MSCheatEngine::clearScreen() {
+	byte blankScreen [39];
+	memset(blankScreen, 0x00, sizeof(blankScreen));
+	sendCommandToFramework(0x06, blankScreen, sizeof(blankScreen));
+}
+
+void MSCheatEngine::showMine() {
+	byte blankScreen[39];
+	memset(blankScreen, 0xF0, sizeof(blankScreen));
+	sendCommandToFramework(0x06, blankScreen, sizeof(blankScreen));
+}
+
 void MSCheatEngine::spyOnTile(int _row, int _col) {
 	if (enabled) {
 		bool hasMine = board.board[_row][_col].hasMine;
 		if (serialVersion) {
-			
+			if (hasMine) {
+				showMine();
+			}
+			else {
+				clearScreen();
+			}
 		}
 		else {
-
+			if (hasMine) {
+				std::cout << "\x1b[0 q";
+			}
+			else {
+				std::cout << "\x1b[1 q";
+			}
 		}
 	}
 }

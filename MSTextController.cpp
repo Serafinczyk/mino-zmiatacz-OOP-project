@@ -1,7 +1,7 @@
 #include "MSTextController.h"
 #include <conio.h>
 
-MSTextController::MSTextController(MinesweeperBoard& _board, MSBoardTextView& _view) : board(_board), view(_view){
+MSTextController::MSTextController(MinesweeperBoard& _board, MSBoardTextView& _view, MSCheatEngine& _cheat) : board(_board), view(_view), cheat(_cheat){
 	console = GetStdHandle(STD_OUTPUT_HANDLE);
 	consoleMode = 0;
 
@@ -21,6 +21,8 @@ MSTextController::~MSTextController() {
 }
 
 void MSTextController::placeCursor(int _row, int _col) {
+	cheat.spyOnTile(_row, _col);
+	
 	pos.X = 6 + _col * 3;
 	pos.Y = 8 + _row;
 	SetConsoleCursorPosition(console, pos);
@@ -53,8 +55,7 @@ void MSTextController::play() {
 	view.display();
 	GetConsoleMode(console, &consoleMode);
 	SetConsoleMode(console, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING); //enable ANSI escape sequences
-	SetConsoleCursorPosition(console, pos);
-	std::cout << "\x1b[1 q"; //set blinking cursor
+	getCursorBack();
 	
 	char key;
 	do {

@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <iostream>
+#include <memory>
 #include "MinesweeperBoard.h"
 
 class MSCheatEngine
@@ -17,5 +18,9 @@ class MSCheatEngine
 		bool serialVersion;
 		bool enabled;
 		MinesweeperBoard& board;
+
+		void sendCommandToFramework(byte _commandId, byte* _payload, size_t _payloadLength);
+		void showMine();
+		void clearScreen();
 };
 

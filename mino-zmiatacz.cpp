@@ -6,7 +6,10 @@ int main()
 {
 	MinesweeperBoard board(5, 5, GameMode::EASY);
 	MSBoardTextView view(board);
-	MSTextController ctrl(board, view);
+	MSCheatEngine sussObject(board);
+	//sussObject.enableFrameworkMode();
+	sussObject.enableStandardMode();
+	MSTextController ctrl(board, view, sussObject);
 
 	ctrl.play();
 
