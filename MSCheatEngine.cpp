@@ -26,6 +26,7 @@ MSCheatEngine::MSCheatEngine(MinesweeperBoard& _board) : board(_board) {
 
 MSCheatEngine::~MSCheatEngine() {
 	if (serialVersion) {
+		clearScreen();
 		CloseHandle(serialDevice);
 	}
 }
@@ -65,7 +66,8 @@ void MSCheatEngine::sendCommandToFramework(byte _commandId, byte* _payload, size
 	payload[1] = 0xAC;
 	payload[2] = _commandId;
 	memcpy(payload + 3, _payload, _payloadLength);
-	WriteFile(serialDevice, payload, size, NULL, NULL);
+	unsigned long numberOfBytesWritten = 0; //dummy variable, because i can't pass null pointer
+	WriteFile(serialDevice, payload, size, &numberOfBytesWritten, NULL);
 	delete[] payload;
 }
 
