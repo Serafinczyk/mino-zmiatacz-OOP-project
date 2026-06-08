@@ -1,6 +1,5 @@
 #pragma once
 #include "MinesweeperBoard.h"
-
 #include <SFML/Graphics.hpp>
 #include "MinesweeperBoard.h"
 
@@ -23,6 +22,7 @@ private:
 	const void updateSceneDebug(Scene& _s);
 
 	MinesweeperBoard& board;
+	sf::Vector2u windowSize;
 };
 
 
