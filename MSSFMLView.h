@@ -18,6 +18,11 @@ private:
 		sf::Texture coveredFields[3];
 		sf::Texture unCoveredFields[10];
 		sf::Texture flag;
+		sf::Font arial;
+
+		sf::Text wonScreen;
+		sf::Text looseScreen;
+
 		std::vector<std::vector<std::pair<bool,sf::Sprite>>> fields; //Playing board
 		std::vector<std::vector<sf::Sprite>> flags; //Flags
 	};

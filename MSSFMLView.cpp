@@ -31,6 +31,9 @@ MSSFMLView::Scene MSSFMLView::createScene() {
     //Loading flag texture
     scene.flag.loadFromImage(scene.textures, false, sf::IntRect({ 600, 0 }, { 50, 50 }));
 
+    //Loading font from file
+    scene.arial.openFromFile("arialbd.ttf");
+
     //Loading textures of covered fields
     scene.coveredFields[0].loadFromImage(scene.textures, false, sf::IntRect({ 0, 0 }, { 50, 50 }));
     scene.coveredFields[1].loadFromImage(scene.textures, false, sf::IntRect({ 50, 0 }, { 50, 50 }));

@@ -16,7 +16,13 @@ private:
 	MSSFMLView& view;
 	MSCheatEngine& cheatEngine;
 	sf::Vector2u windowSize;
+	sf::RenderWindow window;
+
+	int fieldHeight;
+	int fieldWidth;
 	int boardHeight;
 	int boardWidth;
+
+	void calcFieldSize();
 };
 
