@@ -49,7 +49,7 @@ void MSBoardTextView::display() const {
 		std::cout << "(Use wsad keys to move, f key to place a flag, space to reveal field and e to exit.)" << std::endl;
 	}
 	else {
-		std::cout << "(Press p to play again or e to exit.)" << std::endl;
+		std::cout << "(Press e to exit.)" << std::endl;
 	}
 	
 

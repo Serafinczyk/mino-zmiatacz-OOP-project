@@ -5,37 +5,24 @@ MSSFMLView::MSSFMLView(MinesweeperBoard& _b) : board(_b){
     boardWidth = board.getBoardWidth();
 }
 
+
 const void MSSFMLView::display(const bool& _debug) {
-    sf::Vector2u startSize(boardWidth * 50, boardHeight * 50);
-    if (startSize.x>1600) {
-        startSize.x = 1600;
+    activeScene = createScene();
+    if (_debug) {
+        renderFieldsDebug(activeScene);
     }
-    if (startSize.y > 1000) {
-        startSize.y = 1000;
+    else {
+        renderFields(activeScene);
     }
-    sf::RenderWindow window(sf::VideoMode(startSize), "SAPER");
-    windowSize = window.getSize();
-    window.setFramerateLimit(60);
+    renderFlags(activeScene);
+    renderTexts(activeScene);
+}
 
-   
-
-    while (window.isOpen())
-    {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-            if(event->is<sf::Event::Resized>())
-                windowSize = window.getSize();
-        }
-
-        window.clear();
-        Scene s = createScene();
-        renderFieldsDebug(s);
-        renderFlags(s);
-        drawScene(window,s);
-        window.display();
-    }
+const void MSSFMLView::showScene(sf::RenderWindow& _window) {
+        _window.clear();
+        updateScene(activeScene);
+        drawScene(_window, activeScene);
+        _window.display();
 }
 
 MSSFMLView::Scene MSSFMLView::createScene() {
@@ -45,6 +32,9 @@ MSSFMLView::Scene MSSFMLView::createScene() {
     //Loading flag texture
     scene.flag.loadFromImage(scene.textures, false, sf::IntRect({ 600, 0 }, { 50, 50 }));
 
+    //Loading font from file
+    scene.arial.openFromFile("arialbd.ttf");
+
     //Loading textures of covered fields
     scene.coveredFields[0].loadFromImage(scene.textures, false, sf::IntRect({ 0, 0 }, { 50, 50 }));
     scene.coveredFields[1].loadFromImage(scene.textures, false, sf::IntRect({ 50, 0 }, { 50, 50 }));
@@ -53,6 +43,7 @@ MSSFMLView::Scene MSSFMLView::createScene() {
     for (int i = 0; i < 10; ++i) {
         scene.unCoveredFields[i].loadFromImage(scene.textures, false, sf::IntRect({ 100+(i*50), 0}, {50, 50}));
     }
+
     return scene;
 }
 
@@ -100,7 +91,25 @@ const void MSSFMLView::renderFlags(Scene& _s) {
     }
 }
 
+const void MSSFMLView::renderTexts(Scene& _s) {
+    sf::Text text1(_s.arial, "You won :)");
+    sf::Text text2(_s.arial, "You lost :(");
+    _s.texts.push_back(text1);
+    _s.texts.push_back(text2);
+    for (int i = 0; i < _s.texts.size();i++) {
+        _s.texts[i].setCharacterSize(30);
+        _s.texts[i].setStyle(sf::Text::Bold);
+        _s.texts[i].setFillColor(sf::Color::Transparent);
+    }
+}
+
 const void MSSFMLView::updateScene(Scene& _s) {
+    if (board.getGameState() == FINISHED_WIN) {
+        _s.texts[0].setFillColor(sf::Color(128,128,128,255));
+    }
+    else if (board.getGameState() == FINISHED_LOSS) {
+        _s.texts[1].setFillColor(sf::Color(128, 128, 128, 255));
+    }
     for (int row = 0; row < boardHeight; ++row) {
         for (int col = 0; col < boardWidth; ++col) {
             bool hasFlag = board.hasFlag(row, col);
@@ -133,5 +142,8 @@ void MSSFMLView::drawScene(sf::RenderWindow& _window, Scene& _s) {
             _window.draw(_s.fields[row][col].second);
             _window.draw(_s.flags[row][col]);
         }
+    }
+    for (auto t : _s.texts) {
+        _window.draw(t);
     }
 }

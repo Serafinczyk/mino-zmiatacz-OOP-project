@@ -39,6 +39,7 @@ class MinesweeperBoard
 		int getBoardHeight() const;
 		int getMineCount() const;
 		GameState getGameState() const;
+		GameMode getGameMode() const;
 
 		//Game logic functions
 		int countMines(int _row, int _col);
@@ -75,5 +76,8 @@ class MinesweeperBoard
 		void placeMineAtRandomEmptyField();
 		void revealAllMines();
 		void recursiveRevealAlgorithm(int _row, int _col);
+
+		//Friends
+		friend class MSCheatEngine;
 };
 

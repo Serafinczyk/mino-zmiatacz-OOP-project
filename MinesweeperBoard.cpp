@@ -107,6 +107,10 @@ GameState MinesweeperBoard::getGameState() const {
 	return gameState;
 }
 
+GameMode MinesweeperBoard::getGameMode() const {
+	return gameMode;
+}
+
 int  MinesweeperBoard::countMines(int _row, int _col) {
 	int minesAround = 0;
 
