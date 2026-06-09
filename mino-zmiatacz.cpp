@@ -89,7 +89,9 @@ int main()
 		playable.play();
 	}
 	else {
-
+		MSSFMLView view(game);
+		MSSFMLController playable(game, view, cheat);
+		playable.play();
 	}
 
 }
