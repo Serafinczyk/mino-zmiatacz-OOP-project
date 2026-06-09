@@ -4,7 +4,7 @@
 
 int main()
 {
-		MinesweeperBoard mb(5, 7, DEBUG);
+		MinesweeperBoard mb(50, 50, DEBUG);
 		MSSFMLView view(mb);
 		mb.revealField(1, 2);
 		view.display(1);
