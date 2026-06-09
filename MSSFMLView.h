@@ -8,6 +8,7 @@ class MSSFMLView
 public:
 	MSSFMLView(MinesweeperBoard& _b);
 
+	const void init();
 	const void display(const bool& _debug);
 
 private:

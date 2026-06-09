@@ -5,6 +5,10 @@ MSSFMLView::MSSFMLView(MinesweeperBoard& _b) : board(_b){
     boardWidth = board.getBoardWidth();
 }
 
+const void MSSFMLView::init() {
+
+}
+
 const void MSSFMLView::display(const bool& _debug) {
     sf::Vector2u startSize(boardWidth * 50, boardHeight * 50);
     if (startSize.x>1600) {
