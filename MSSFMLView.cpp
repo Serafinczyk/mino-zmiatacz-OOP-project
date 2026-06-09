@@ -15,7 +15,6 @@ const void MSSFMLView::display(const bool& _debug) {
         renderFields(activeScene);
     }
     renderFlags(activeScene);
-    renderTexts(activeScene);
 }
 
 const void MSSFMLView::showScene(sf::RenderWindow& _window) {
@@ -91,24 +90,28 @@ const void MSSFMLView::renderFlags(Scene& _s) {
     }
 }
 
-const void MSSFMLView::renderTexts(Scene& _s) {
-    sf::Text text1(_s.arial, "You won :)");
-    sf::Text text2(_s.arial, "You lost :(");
-    _s.texts.push_back(text1);
-    _s.texts.push_back(text2);
-    for (int i = 0; i < _s.texts.size();i++) {
-        _s.texts[i].setCharacterSize(30);
-        _s.texts[i].setStyle(sf::Text::Bold);
-        _s.texts[i].setFillColor(sf::Color::Transparent);
-    }
+const void MSSFMLView::writeText(Scene& _s ,std::string _text) {
+    sf::Vector2f size(50 * _text.length(), 60);
+    auto t = std::make_unique<sf::Text>(_s.arial, _text);
+    t->setCharacterSize(30);
+    t->setFillColor(sf::Color(255, 255, 255, 255));
+    t->setStyle(sf::Text::Bold);
+
+    auto rect = std::make_unique <sf::RectangleShape>(size);
+    rect->setFillColor(sf::Color(128, 128, 128, 128));
+
+    _s.ui.push_back(std::move(rect));
+    _s.ui.push_back(std::move(t));
 }
 
 const void MSSFMLView::updateScene(Scene& _s) {
     if (board.getGameState() == FINISHED_WIN) {
-        _s.texts[0].setFillColor(sf::Color(128,128,128,255));
+        _s.ui.clear();
+        writeText(_s, "You won :)");
     }
     else if (board.getGameState() == FINISHED_LOSS) {
-        _s.texts[1].setFillColor(sf::Color(128, 128, 128, 255));
+        _s.ui.clear();
+        writeText(_s, "You lost :(");
     }
     for (int row = 0; row < boardHeight; ++row) {
         for (int col = 0; col < boardWidth; ++col) {
@@ -143,7 +146,7 @@ void MSSFMLView::drawScene(sf::RenderWindow& _window, Scene& _s) {
             _window.draw(_s.flags[row][col]);
         }
     }
-    for (auto t : _s.texts) {
-        _window.draw(t);
+    for (auto& u : _s.ui) {
+        _window.draw(*u);
     }
 }
