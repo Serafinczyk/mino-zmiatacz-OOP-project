@@ -15,6 +15,7 @@ const void MSSFMLView::display(const bool& _debug) {
         renderFields(activeScene);
     }
     renderFlags(activeScene);
+    renderTexts(activeScene);
 }
 
 const void MSSFMLView::showScene(sf::RenderWindow& _window) {
@@ -42,6 +43,7 @@ MSSFMLView::Scene MSSFMLView::createScene() {
     for (int i = 0; i < 10; ++i) {
         scene.unCoveredFields[i].loadFromImage(scene.textures, false, sf::IntRect({ 100+(i*50), 0}, {50, 50}));
     }
+
     return scene;
 }
 
@@ -89,7 +91,25 @@ const void MSSFMLView::renderFlags(Scene& _s) {
     }
 }
 
+const void MSSFMLView::renderTexts(Scene& _s) {
+    sf::Text text1(_s.arial, "You won :)");
+    sf::Text text2(_s.arial, "You lost :(");
+    _s.texts.push_back(text1);
+    _s.texts.push_back(text2);
+    for (int i = 0; i < _s.texts.size();i++) {
+        _s.texts[i].setCharacterSize(30);
+        _s.texts[i].setStyle(sf::Text::Bold);
+        _s.texts[i].setFillColor(sf::Color::Transparent);
+    }
+}
+
 const void MSSFMLView::updateScene(Scene& _s) {
+    if (board.getGameState() == FINISHED_WIN) {
+        _s.texts[0].setFillColor(sf::Color(128,128,128,255));
+    }
+    else if (board.getGameState() == FINISHED_LOSS) {
+        _s.texts[1].setFillColor(sf::Color(128, 128, 128, 255));
+    }
     for (int row = 0; row < boardHeight; ++row) {
         for (int col = 0; col < boardWidth; ++col) {
             bool hasFlag = board.hasFlag(row, col);
@@ -122,5 +142,8 @@ void MSSFMLView::drawScene(sf::RenderWindow& _window, Scene& _s) {
             _window.draw(_s.fields[row][col].second);
             _window.draw(_s.flags[row][col]);
         }
+    }
+    for (auto t : _s.texts) {
+        _window.draw(t);
     }
 }
