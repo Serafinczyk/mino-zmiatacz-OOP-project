@@ -21,6 +21,10 @@
     <ClCompile Include="MinesweeperBoard.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+
+    <ClCompile Include="MSCheatEngine.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
     <ClCompile Include="MSBoardTextView.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -33,6 +37,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MinesweeperBoard.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    
+    <ClInclude Include="MSCheatEngine.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="MSBoardTextView.h">

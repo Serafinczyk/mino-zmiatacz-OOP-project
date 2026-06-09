@@ -3,17 +3,20 @@
 #include <conio.h>
 #include "MinesweeperBoard.h"
 #include "MSBoardTextView.h"
+#include "MSCheatEngine.h"
+
 
 class MSTextController
 {
 	public:
-		MSTextController(MinesweeperBoard& _board, MSBoardTextView& _view);
+		MSTextController(MinesweeperBoard& _board, MSBoardTextView& _view, MSCheatEngine& cheat);
 		~MSTextController();
 		void play();
 
 	private:
 		MinesweeperBoard& board;
 		MSBoardTextView& view;
+		MSCheatEngine& cheat;
 		HANDLE console;
 		COORD pos;
 		COORD zeroPos;

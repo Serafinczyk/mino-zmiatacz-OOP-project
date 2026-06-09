@@ -75,5 +75,8 @@ class MinesweeperBoard
 		void placeMineAtRandomEmptyField();
 		void revealAllMines();
 		void recursiveRevealAlgorithm(int _row, int _col);
+
+		//Friends
+		friend class MSCheatEngine;
 };
 
