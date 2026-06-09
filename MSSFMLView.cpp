@@ -5,45 +5,23 @@ MSSFMLView::MSSFMLView(MinesweeperBoard& _b) : board(_b){
     boardWidth = board.getBoardWidth();
 }
 
-const void MSSFMLView::init() {
-
-}
 
 const void MSSFMLView::display(const bool& _debug) {
-    sf::Vector2u startSize(boardWidth * 50, boardHeight * 50);
-    if (startSize.x>1600) {
-        startSize.x = 1600;
-    }
-    if (startSize.y > 1000) {
-        startSize.y = 1000;
-    }
-    sf::RenderWindow window(sf::VideoMode(startSize), "SAPER");
-    windowSize = window.getSize();
-    window.setFramerateLimit(60);
-    Scene s = createScene();
+    activeScene = createScene();
     if (_debug) {
-        renderFieldsDebug(s);
+        renderFieldsDebug(activeScene);
     }
     else {
-        renderFields(s);
+        renderFields(activeScene);
     }
-    renderFlags(s);
+    renderFlags(activeScene);
+}
 
-    while (window.isOpen())
-    {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-            if(event->is<sf::Event::Resized>())
-                windowSize = window.getSize();
-        }
-
-        window.clear();
-        updateScene(s);
-        drawScene(window,s);
-        window.display();
-    }
+const void MSSFMLView::showScene(sf::RenderWindow& _window) {
+        _window.clear();
+        updateScene(activeScene);
+        drawScene(_window, activeScene);
+        _window.display();
 }
 
 MSSFMLView::Scene MSSFMLView::createScene() {

@@ -8,8 +8,8 @@ class MSSFMLView
 public:
 	MSSFMLView(MinesweeperBoard& _b);
 
-	const void init();
 	const void display(const bool& _debug);
+	const void showScene(sf::RenderWindow& _window);
 
 private:
 	struct Scene //all assets here
@@ -21,6 +21,8 @@ private:
 		std::vector<std::vector<std::pair<bool,sf::Sprite>>> fields; //Playing board
 		std::vector<std::vector<sf::Sprite>> flags; //Flags
 	};
+
+	Scene activeScene;
 
 	//only at start, then only update
 	Scene createScene();
@@ -34,7 +36,6 @@ private:
 	void drawScene(sf::RenderWindow& _window,Scene& _s);
 
 	MinesweeperBoard& board;
-	sf::Vector2u windowSize;
 	int boardHeight;
 	int boardWidth;
 };

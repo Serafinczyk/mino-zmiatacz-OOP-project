@@ -1,6 +1,8 @@
 #pragma once
 #include "MinesweeperBoard.h"
+#include "MSCheatEngine.h"
 #include "MSSFMLView.h"
+#include <SFML/Graphics.hpp>
 
 class MSSFMLController
 {
@@ -10,6 +12,11 @@ public:
 	void play();
 
 private:
-	
+	MinesweeperBoard& board;
+	MSSFMLView& view;
+	MSCheatEngine& cheatEngine;
+	sf::Vector2u windowSize;
+	int boardHeight;
+	int boardWidth;
 };
 
