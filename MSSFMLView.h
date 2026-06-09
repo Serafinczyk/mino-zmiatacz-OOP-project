@@ -2,7 +2,6 @@
 #include "MinesweeperBoard.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "MinesweeperBoard.h"
 
 class MSSFMLView
 {

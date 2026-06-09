@@ -4,10 +4,10 @@
 
 int main()
 {
-		MinesweeperBoard mb(50, 50, DEBUG);
+		MinesweeperBoard mb(50, 50, EASY);
 		MSSFMLView view(mb);
-		mb.revealField(1, 2);
-		view.display(1);
+		mb.revealField(10, 2);
+		view.display(0);
 
 
 }

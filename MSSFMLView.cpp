@@ -16,8 +16,14 @@ const void MSSFMLView::display(const bool& _debug) {
     sf::RenderWindow window(sf::VideoMode(startSize), "SAPER");
     windowSize = window.getSize();
     window.setFramerateLimit(60);
-
-   
+    Scene s = createScene();
+    if (_debug) {
+        renderFieldsDebug(s);
+    }
+    else {
+        renderFields(s);
+    }
+    renderFlags(s);
 
     while (window.isOpen())
     {
@@ -30,9 +36,7 @@ const void MSSFMLView::display(const bool& _debug) {
         }
 
         window.clear();
-        Scene s = createScene();
-        renderFieldsDebug(s);
-        renderFlags(s);
+        updateScene(s);
         drawScene(window,s);
         window.display();
     }
