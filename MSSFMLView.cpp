@@ -91,7 +91,7 @@ const void MSSFMLView::renderFlags(Scene& _s) {
 }
 
 const void MSSFMLView::writeText(Scene& _s ,std::string _text) {
-    sf::Vector2f size(50 * _text.length(), 60);
+    sf::Vector2f size(static_cast<float>(50 * _text.length()), 60);
     auto t = std::make_unique<sf::Text>(_s.arial, _text);
     t->setCharacterSize(30);
     t->setFillColor(sf::Color(255, 255, 255, 255));
